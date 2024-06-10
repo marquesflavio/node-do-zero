@@ -11,18 +11,32 @@
 //Servidor com Fastify
 
 import { fastify } from "fastify";
+import { DatabaseMemory } from "./database-memory.js";
 
 const server = fastify()
+const database = new DatabaseMemory()
 
-server.get('/', () => {
-    return "Hello World!"
+///criar vídeos
+server.post('/videos', (request, reply) => {
+    database.create({
+        title: 'Video 01',
+        description: 'Esse é o vídeo 01',
+        duration: 180,
+    })
+
+    return reply.status(201).send()
 })
 
-server.get('/fastify', () => {
+server.get('/videos', () => {
     return "Hello Fastify!"
 })
 
-server.get('/node', () => {
+//atualizar vídeos
+server.put('/videos/:id', () => {
+    return "Hello Node!"
+})
+
+server.delete('/videos/:id', () => {
     return "Hello Node!"
 })
 
